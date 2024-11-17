@@ -84,6 +84,7 @@ export class Frame extends HasWeights {
 
 export class CallTreeNode extends HasWeights {
   children: CallTreeNode[] = []
+  executedCode?: string
 
   isRoot() {
     return this.frame === Frame.root
@@ -585,7 +586,7 @@ export class CallTreeProfileBuilder extends Profile {
     }
   }
 
-  private _enterFrame(frame: Frame, value: number, useAppendOrder: boolean) {
+  private _enterFrame(frame: Frame, value: number, useAppendOrder: boolean, executedCode?: string) {
     let stack = useAppendOrder ? this.appendOrderStack : this.groupedOrderStack
     this.addWeightsToNodes(value, stack)
 
@@ -612,16 +613,17 @@ export class CallTreeProfileBuilder extends Profile {
         node = last
       } else {
         node = new CallTreeNode(frame, prevTop)
+        node.executedCode = executedCode
         prevTop.children.push(node)
       }
       stack.push(node)
     }
   }
-  enterFrame(frameInfo: FrameInfo, value: number) {
+  enterFrame(frameInfo: FrameInfo, value: number, executedCode?: string) {
     const frame = Frame.getOrInsert(this.frames, frameInfo)
     this.addWeightsToFrames(value)
-    this._enterFrame(frame, value, true)
-    this._enterFrame(frame, value, false)
+    this._enterFrame(frame, value, true, executedCode)
+    this._enterFrame(frame, value, false, executedCode)
 
     this.stack.push(frame)
     const frameCount = this.framesInStack.get(frame) || 0

@@ -52,6 +52,7 @@ interface StackTraceViewProps {
   getFrameColor: (frame: Frame) => string
   node: CallTreeNode
 }
+
 function StackTraceView(props: StackTraceViewProps) {
   const style = getFlamechartStyle(useTheme())
 
@@ -80,9 +81,17 @@ function StackTraceView(props: StackTraceViewProps) {
     }
     rows.push(<div className={css(style.stackLine)}>{row}</div>)
   }
+
+  const executedCode = props.node?.executedCode
+
   return (
     <div className={css(style.stackTraceView)}>
       <div className={css(style.stackTraceViewPadding)}>{rows}</div>
+      {executedCode ? (
+        <div className={css(style.stackTraceViewPadding)}>
+          <span>{executedCode}</span>
+        </div>
+      ) : null}
     </div>
   )
 }

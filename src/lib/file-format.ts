@@ -63,10 +63,12 @@ function exportProfile(profile: Profile, getIndexForFrame: (frame: Frame) => num
     })
   }
   const closeFrame = (node: CallTreeNode, value: number) => {
+    const executedCode = node?.executedCode
     eventedProfile.events.push({
       type: FileFormat.EventType.CLOSE_FRAME,
       frame: getIndexForFrame(node.frame),
       at: value,
+      ...{executedCode},
     })
   }
   profile.forEachCall(openFrame, closeFrame)
@@ -110,7 +112,7 @@ function importSpeedscopeProfile(
     for (let ev of events) {
       switch (ev.type) {
         case FileFormat.EventType.OPEN_FRAME: {
-          profile.enterFrame(frameInfos[ev.frame], ev.at - startValue)
+          profile.enterFrame(frameInfos[ev.frame], ev.at - startValue, ev.executedCode)
           break
         }
         case FileFormat.EventType.CLOSE_FRAME: {

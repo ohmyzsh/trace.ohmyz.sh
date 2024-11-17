@@ -135,6 +135,8 @@ export namespace FileFormat {
     type: EventType.OPEN_FRAME
     // An index into the frames array in the shared data within the profile
     frame: number
+    // Executed code
+    executedCode?: string
   }
 
   interface CloseFrameEvent extends IEvent {

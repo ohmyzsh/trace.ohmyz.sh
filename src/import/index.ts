@@ -24,6 +24,7 @@ import {isTraceEventFormatted, importTraceEvents} from './trace-event'
 import {importFromCallgrind} from './callgrind'
 import {importFromPapyrus} from './papyrus'
 import {importFromPMCStatCallGraph} from './pmcstat-callgraph'
+import {importFromZshTrace} from './zsh-trace'
 
 export async function importProfileGroupFromText(
   fileName: string,
@@ -127,6 +128,9 @@ async function _importProfileGroup(dataSource: ProfileDataSource): Promise<Profi
   } else if (fileName.endsWith('.pmcstat.graph')) {
     console.log('Importing as pmcstat callgraph format')
     return toGroup(importFromPMCStatCallGraph(contents))
+  } else if (fileName.endsWith('.zsh-trace.log')) {
+    console.log('Importing as zsh trace log')
+    return importFromZshTrace(contents, fileName)
   }
 
   // Second pass: Try to guess what file format it is based on structure
