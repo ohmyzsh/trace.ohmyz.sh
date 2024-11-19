@@ -1,4 +1,18 @@
+This is a fork from [speedscope.app](https://speedscope.app) that has a converter from custom zsh trace format to flamegraph, allowing you to visualize where time is spent.
+
+> [!NOTE]
+> This is a very early stage experimental project. The tracing adds a lot of overhead (sometimes measuring up to 300ms, might be more if there are many files and lines executed).
+> Use at your own risk.
+
+**Set up:**
+
+- Add the [custom zsh trace script](https://github.com/ohmyzsh/trace.ohmyz.sh/blob/main/utils/zsh-trace/zshenv.zsh) in the .zshenv startup phase: if you have a `.zshenv`, add the lines at the top. Otherwise save it as the `.zshenv` file in your home directory.
+- When the shell starts, it will output the start time and in which file it was stored.
+- Then, you can go to https://trace-ohmyz-sh.pages.dev/ and drag-and-drop the file to see the flamegraph.
+----
+
 English | [简体中文](./README-zh_CN.md)
+
 # 🔬speedscope 
 A fast, interactive web-based viewer for performance profiles. Supports import from a variety of profiles in a variety of languages (JS, Ruby, Python, Go & more). Try it here: https://www.speedscope.app
 
