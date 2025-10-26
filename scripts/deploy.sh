@@ -15,7 +15,7 @@ OUTDIR=`pwd`/dist/http-release
 # Create a shallow clone of the repository
 TMPDIR=`mktemp -d -t speedscope-deploy`
 pushd "$TMPDIR"
-git clone --depth 1 git@github.com:jlfwong/speedscope.git -b gh-pages
+git clone --depth 1 git@github.com:ohmyzsh/trace.ohmyz.sh.git -b gh-pages
 
 # Copy the build artifacts into the shallow clone
 pushd speedscope
