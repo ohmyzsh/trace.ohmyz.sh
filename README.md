@@ -1,19 +1,36 @@
+# trace.ohmyz.sh
+
 This is a fork from [speedscope.app](https://speedscope.app) that has a converter from custom zsh trace format to flamegraph, allowing you to visualize where time is spent.
 
 > [!NOTE]
-> This is a very early stage experimental project. The tracing adds a lot of overhead (sometimes measuring up to 300ms, might be more if there are many files and lines executed).
-> Use at your own risk.
+> This is a very early stage experimental project. The tracing adds a lot of overhead, mostly spent on serializing and writing verbose traces to the log file.
+> This means you'll measure significantly higher startup times, but the time spent and shown in the graph should be proportionally the same as without tracing enabled.
 
-**Set up:**
+## Set up
 
-- Add the [custom zsh trace script](https://github.com/ohmyzsh/trace.ohmyz.sh/blob/main/utils/zsh-trace/zshenv.zsh) in the .zshenv startup phase: if you have a `.zshenv`, add the lines at the top. Otherwise save it as the `.zshenv` file in your home directory.
-- When the shell starts, it will output the start time and in which file it was stored.
-- Then, you can go to https://trace-ohmyz-sh.pages.dev/ and drag-and-drop the file to see the flamegraph.
+1. Create a directory where to store trace files.
+2. Add the [custom zsh trace script](https://github.com/ohmyzsh/trace.ohmyz.sh/blob/main/utils/zsh-trace/zshenv.zsh) in the .zshenv startup phase:
+   1. If you have a `.zshenv`, add the lines at the top. Otherwise save it as the `.zshenv` file in your home directory.
+   2. Make sure to change where the trace files are stored.
+3. When the shell starts, it will output the start time and in which file it was stored.
+4. Go to https://trace.ohmyz.sh and drag-and-drop the file to see the flamegraph.
+5. You can click on specific frames to see what code is run.
+
+## Screenshots
+
+<img width="1024" height="768" alt="Exploring a specific section of the startup taking a long time" src="https://github.com/user-attachments/assets/788e7237-6e18-4e5f-a6f3-ce6c446d703c" />
+
+<img width="1024" height="768" alt="Investigating the details: what code is run that's taking a long time" src="https://github.com/user-attachments/assets/f6710f35-5735-4705-b77f-a873e2e0496d" />
+
 ----
+<details>
+<summary>
+<h2>🔬speedscope README</h2>
+</summary>  
+
 
 English | [简体中文](./README-zh_CN.md)
 
-# 🔬speedscope 
 A fast, interactive web-based viewer for performance profiles. Supports import from a variety of profiles in a variety of languages (JS, Ruby, Python, Go & more). Try it here: https://www.speedscope.app
 
 Given raw profiling data, speedscope allows you to interactively explore the data to get insight into what's slow in your application, or allocating all the memory, or whatever data is represented in the profiling data.
@@ -145,3 +162,4 @@ Once a profile has loaded, the main view is split into two: the top area is the 
 ## Contributing
 
 Do you want to contribute to speedscope? Sweeeeet. Check out [CONTRIBUTING.md](./CONTRIBUTING.md) for instructions on setting up your dev environment.
+</details>
